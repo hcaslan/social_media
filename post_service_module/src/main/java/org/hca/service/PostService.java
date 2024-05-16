@@ -11,6 +11,8 @@ import org.hca.repository.PostRepository;
 import org.hca.utility.JwtTokenManager;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -20,8 +22,16 @@ public class PostService {
     private final UserManager userManager;
     public void savePost(String token, PostSaveRequestDto dto) {
         Long authId = jwtTokenManager.getAuthIdFromToken(token).orElseThrow(() -> new UserProfileServiceException(ErrorType.INVALID_TOKEN));
-        Post post = postMapper.dtoToPost(dto);
+        //Post post = postMapper.dtoToPost(dto);
+        Post post = PostMapper.INSTANCE.dtoToPost(dto);
         post.setUserId(jwtTokenManager.getUserIdFromToken(userManager.getUserIdToken(authId)).orElseThrow(() -> new UserProfileServiceException(ErrorType.INVALID_TOKEN)));
         postRepository.save(post);
+    }
+    public List<Post> findAll() {
+        return postRepository.findAll();
+    }
+
+    public List<Post> findPostForUser(String userId) {
+        return postRepository.findByUserId(userId);
     }
 }

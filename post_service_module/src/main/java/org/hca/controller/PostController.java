@@ -7,6 +7,8 @@ import org.hca.service.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.hca.constant.EndPoints.*;
 
 @RestController
@@ -18,5 +20,13 @@ public class PostController {
     public ResponseEntity<String> createPost(@RequestParam(name = "token") String token, @RequestBody PostSaveRequestDto dto){
         service.savePost(token,dto);
         return ResponseEntity.ok("Success");
+    }
+    @GetMapping("/findAll")
+    public ResponseEntity<List<Post>> findAll(){
+        return ResponseEntity.ok(service.findAll());
+    }
+    @GetMapping("/findByUserId")
+    public ResponseEntity<List<Post>> findPostForUser(@RequestParam(name = "UserId") String userId){
+        return ResponseEntity.ok(service.findPostForUser(userId));
     }
 }

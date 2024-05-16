@@ -16,6 +16,7 @@
     <module>config_server_service_module</module>
     <module>config_git_server_service_module</module>
     <module>post_service_module</module>
+    <module>api_gateway_service_module</module>
   </modules>
 
 
@@ -33,6 +34,7 @@
     <cloud.version>4.1.1</cloud.version>
     <postgresql.version>42.7.3</postgresql.version>
     <slf4j.version>2.0.13</slf4j.version>
+    <circuitBreaker.version>3.1.0</circuitBreaker.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -83,7 +85,26 @@
         <artifactId>spring-cloud-config-server</artifactId>
         <version>${cloud.version}</version>
       </dependency>
-
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-gateway</artifactId>
+        <version>${cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+        <version>${circuitBreaker.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
+        <version>${circuitBreaker.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-webflux</artifactId>
+        <version>${springBoot.version}</version>
+      </dependency>
 
     </dependencies>
   </dependencyManagement>
@@ -123,6 +144,11 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.projectreactor</groupId>
+      <artifactId>reactor-core</artifactId>
+      <version>3.5.0</version>
     </dependency>
   </dependencies>
 

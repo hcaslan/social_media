@@ -9,6 +9,7 @@
         <module name="auth_service_module" />
         <module name="user_profile_service_module" />
         <module name="post_service_module" />
+        <module name="api_gateway_service_module" />
         <module name="config_server_service_module" />
         <module name="config_git_server_service_module" />
       </profile>
