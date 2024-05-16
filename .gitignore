@@ -1,0 +1,5 @@
+# Project exclude paths
+/auth_service_module/target/
+/config_server_service_module/target/
+/post_service_module/target/
+/user_profile_service_module/target/

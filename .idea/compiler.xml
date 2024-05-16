@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="auth_service_module" />
+        <module name="user_profile_service_module" />
+        <module name="post_service_module" />
+        <module name="config_server_service_module" />
+        <module name="config_git_server_service_module" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="config_server_module" target="21" />
+      <module name="config_service_module" target="21" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
