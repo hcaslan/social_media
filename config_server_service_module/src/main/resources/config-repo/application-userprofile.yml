@@ -8,6 +8,11 @@ spring:
       database: UserProfileDB
       username: bilge
       password: bilge!123
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
 userprofileservice:
   secret:
     secret-key: ${JAVA14_SECRET_KEY}

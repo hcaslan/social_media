@@ -4,8 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
+import org.springframework.data.mongodb.repository.Update;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -20,5 +24,10 @@ public class Post {
     private String content;
     private String photo;
     @Builder.Default
-    private EStatus status = EStatus.PENDING;
+    private LocalDateTime createdAt = LocalDateTime.now();
+    @Builder.Default
+    private LocalDateTime updatedAt = LocalDateTime.now();
+    @Builder.Default
+    private EStatus status = EStatus.ACTIVE;
+
 }

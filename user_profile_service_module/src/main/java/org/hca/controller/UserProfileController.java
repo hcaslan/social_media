@@ -17,7 +17,7 @@ public class UserProfileController {
 
     @PostMapping(SAVE)
     public ResponseEntity<Void> save(@RequestBody UserProfileSaveRequestDto dto){
-        service.saveUserProfile(dto);
+        //service.saveUserProfile(dto);
         return ResponseEntity.ok().build();
     }
     @GetMapping("/getUserIdToken")
@@ -30,15 +30,15 @@ public class UserProfileController {
         return ResponseEntity.ok(service.update(dto));
     }
 
-    @PostMapping("/submitForm")
-    public String submitForm(@ModelAttribute("dto") UserProfileUpdateRequestDto dto) {
-        service.update(dto);
-        return "success"; // Or redirect to another page
-    }
+//    @PostMapping("/submitForm")
+//    public String submitForm(@ModelAttribute("dto") UserProfileUpdateRequestDto dto) {
+//        service.update(dto);
+//        return "success"; // Or redirect to another page
+//    }
 
     @PutMapping("/updateStatus")
     public ResponseEntity<Void> updateStatus(@RequestHeader("Authorization") String token){
-        service.updateStatus(token);
+        //service.updateStatus(token);
         return ResponseEntity.ok().build();
     }
 }

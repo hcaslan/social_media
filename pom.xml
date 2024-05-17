@@ -105,6 +105,12 @@
         <artifactId>spring-boot-starter-webflux</artifactId>
         <version>${springBoot.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-amqp</artifactId>
+        <version>${springBoot.version}</version>
+      </dependency>
+
 
     </dependencies>
   </dependencyManagement>

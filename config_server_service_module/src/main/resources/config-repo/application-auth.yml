@@ -9,6 +9,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
 authservice:
   secret:
     secret-key: ${JAVA14_SECRET_KEY}

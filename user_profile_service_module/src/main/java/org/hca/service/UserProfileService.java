@@ -11,6 +11,8 @@ import org.hca.manager.AuthManager;
 import org.hca.mapper.UserProfileMapper;
 import org.hca.repository.UserProfileRepository;
 import org.hca.utility.JwtTokenManager;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,8 @@ public class UserProfileService {
     private final UserProfileMapper userProfileMapper;
     private final JwtTokenManager jwtTokenManager;
     private final AuthManager authManager;
+    private final RabbitTemplate rabbitTemplate;
+    @RabbitListener(queues = "q.A")
     public void saveUserProfile(UserProfileSaveRequestDto dto){
         userProfileRepository.save(UserProfile.builder()
                         .authId(dto.getAuthId())
@@ -37,15 +41,20 @@ public class UserProfileService {
         if(dto.getWebsite() != null) userProfile.setWebsite(dto.getWebsite());
         if(dto.getPhone() != null) userProfile.setPhone(dto.getPhone());
         if (dto.getEmail() != null) {
-            authManager.updateEmail(
-                    jwtTokenManager.createToken(userProfile.getAuthId(),dto.getEmail())
-                            .orElseThrow(()-> new UserProfileServiceException(ErrorType.USER_NOT_FOUND)));
+//            authManager.updateEmail(
+//                    jwtTokenManager.createToken(userProfile.getAuthId(),dto.getEmail())
+//                            .orElseThrow(()-> new UserProfileServiceException(ErrorType.USER_NOT_FOUND)));
+            String token = jwtTokenManager.createToken(userProfile.getAuthId(),dto.getEmail())
+                           .orElseThrow(()-> new UserProfileServiceException(ErrorType.USER_NOT_FOUND));
+
+            //rabbitTemplate.convertAndSend(token);
             userProfile.setEmail(dto.getEmail());
         }
         userProfileRepository.save(userProfile);
         return "Update Success!";
     }
 
+    @RabbitListener(queues = "q.B")
     public void updateStatus(String token) {
         Long authId = jwtTokenManager.getIdFromToken(token).orElseThrow(() -> new UserProfileServiceException(ErrorType.INVALID_TOKEN));
         EStatus status = jwtTokenManager.getStatusFromToken(token).orElseThrow(() -> new UserProfileServiceException(ErrorType.INVALID_TOKEN));

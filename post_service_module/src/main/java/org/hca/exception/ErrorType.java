@@ -60,7 +60,13 @@ public enum ErrorType {
             HttpStatus.BAD_REQUEST),
     INTERNAL_SERVER_ERROR(6000,
             "Service is not responding.",
-            HttpStatus.INTERNAL_SERVER_ERROR);
+            HttpStatus.INTERNAL_SERVER_ERROR),
+    POST_NOT_FOUND(6000,
+            "Post not found.",
+            HttpStatus.BAD_REQUEST),
+    POST_ALREADY_DELETED(6000,
+            "Post already deleted.",
+            HttpStatus.BAD_REQUEST);
 
     private Integer code;
     private String message;

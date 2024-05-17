@@ -16,6 +16,8 @@ import org.hca.mapper.UserProfileSaveRequestDtoMapper;
 import org.hca.repository.AuthRepository;
 import org.hca.utility.CodeGenerator;
 import org.hca.utility.JwtTokenManager;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +29,7 @@ public class AuthService {
     private final JwtTokenManager jwtTokenManager;
     private final UserProfileManager userProfileManager;
     private final UserProfileSaveRequestDtoMapper userProfileMapper;
+    private final RabbitTemplate rabbitTemplate;
 
 
     @Transactional
@@ -42,8 +45,8 @@ public class AuthService {
 
         UserProfileSaveRequestDto saveRequest = UserProfileSaveRequestDtoMapper.INSTANCE.authToUserProfileSaveRequestDto(auth);
 
-        userProfileManager.save(saveRequest);
-
+        //userProfileManager.save(saveRequest);
+        rabbitTemplate.convertAndSend("exchange.direct","Routing.A",saveRequest);
         return auth;
     }
     public String login(LoginRequestDto dto) {
@@ -60,6 +63,7 @@ public class AuthService {
         return statusControl(auth);
     }
 
+    @Transactional
     public String statusControl(Auth auth){
         switch (auth.getStatus()) {
             case ACTIVE:
@@ -70,7 +74,10 @@ public class AuthService {
             case PENDING:
                 auth.setStatus(EStatus.ACTIVE);
                 authRepository.save(auth);
-                userProfileManager.updateStatus(jwtTokenManager.createToken(auth.getId(),auth.getStatus()).orElseThrow(()-> new AuthMicroServiceException(ErrorType.TOKEN_CREATION_FAILED)));
+                String token = jwtTokenManager.createToken(auth.getId(),auth.getStatus()).orElseThrow(()-> new AuthMicroServiceException(ErrorType.TOKEN_CREATION_FAILED));
+                //userProfileManager.updateStatus(jwtTokenManager.createToken(auth.getId(),auth.getStatus()).orElseThrow(()-> new AuthMicroServiceException(ErrorType.TOKEN_CREATION_FAILED)));
+
+                rabbitTemplate.convertAndSend("exchange.direct","Routing.B",token);
                 return "Activation Success!";
             default:
                 throw new AuthMicroServiceException(ErrorType.ACTIVATION_ERROR);
@@ -103,6 +110,7 @@ public class AuthService {
         return jwtTokenManager.getRoleFromToken(token).orElseThrow(() -> new AuthMicroServiceException(ErrorType.ID_NOT_FOUND)).toString();
     }
 
+    //@RabbitListener(queues ="q.B")
     public void updateEmail(String token) {
         Long id = getIdFromToken(token);
         String email = jwtTokenManager.getEmailFromToken(token).orElseThrow(() -> new AuthMicroServiceException(ErrorType.EMAIL_NOT_FOUND));

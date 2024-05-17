@@ -9,6 +9,7 @@ import org.hca.dto.response.RegisterResponseDto;
 import org.hca.entity.ERole;
 import org.hca.mapper.AuthMapper;
 import org.hca.service.AuthService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ import static org.hca.constant.EndPoints.*;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
+
 
     @PostMapping(REGISTER)
     public ResponseEntity<RegisterResponseDto> register(@RequestBody @Valid RegisterRequestDto dto) {
@@ -42,7 +44,7 @@ public class AuthController {
     }
     @PutMapping("/updateEmail")
     public ResponseEntity<Void> updateEmail(@RequestHeader("Authorization") String token){
-        authService.updateEmail(token);
+        //authService.updateEmail(token);
         return ResponseEntity.ok().build();
     }
 
