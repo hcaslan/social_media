@@ -5,7 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a4dd0b1-2755-430a-994a-5fc14fa7e95d" name="Changes" comment="v1">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/221ef658-f563-40a0-8a5c-1ae421765a55.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/221ef658-f563-40a0-8a5c-1ae421765a55/storage_v2/_src_/database/SocialMediaAuthDB.XddjKA.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/221ef658-f563-40a0-8a5c-1ae421765a55/storage_v2/_src_/database/SocialMediaAuthDB.XddjKA/schema/information_schema.FNRwLQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/221ef658-f563-40a0-8a5c-1ae421765a55/storage_v2/_src_/database/SocialMediaAuthDB.XddjKA/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/221ef658-f563-40a0-8a5c-1ae421765a55/storage_v2/_src_/database/SocialMediaAuthDB.XddjKA/schema/public.abK9xQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth_service_module/src/main/java/org/hca/config/RabbitMQConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/post_service_module/src/main/java/org/hca/dto/request/PostUpdateRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user_profile_service_module/src/main/java/org/hca/config/RabbitMQConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth_service_module/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/auth_service_module/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth_service_module/src/main/java/org/hca/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth_service_module/src/main/java/org/hca/controller/AuthController.java" afterDir="false" />
@@ -246,7 +255,7 @@
       <workItem from="1715774998701" duration="1174000" />
       <workItem from="1715776229544" duration="4926000" />
       <workItem from="1715856191874" duration="14360000" />
-      <workItem from="1715943009935" duration="10264000" />
+      <workItem from="1715943009935" duration="10584000" />
     </task>
     <task id="LOCAL-00001" summary="v1">
       <option name="closed" value="true" />
@@ -264,7 +273,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715870719298</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="v1">
+      <option name="closed" value="true" />
+      <created>1715956251015</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1715956251015</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
