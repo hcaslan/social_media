@@ -11,6 +11,7 @@ import org.hca.manager.UserManager;
 import org.hca.mapper.PostMapper;
 import org.hca.repository.PostRepository;
 import org.hca.utility.JwtTokenManager;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@EnableMongoAuditing
 public class PostService {
     private final PostRepository postRepository;
     private final JwtTokenManager jwtTokenManager;
@@ -73,7 +75,6 @@ public class PostService {
             if(dto.getPhoto() != null) post.setPhoto(dto.getPhoto());
             if(dto.getTitle() != null) post.setTitle(dto.getTitle());
             if(dto.getContent() != null) post.setContent(dto.getContent());
-            post.setUpdatedAt(LocalDateTime.now());
         }
         postRepository.save(post);
     }

@@ -26,15 +26,10 @@ public class UserProfileController {
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<String> update(@RequestBody UserProfileUpdateRequestDto dto){
-        return ResponseEntity.ok(service.update(dto));
+    public ResponseEntity<String> update(@RequestParam(name = "token") String token, @RequestBody UserProfileUpdateRequestDto dto){
+        return ResponseEntity.ok(service.update(token,dto));
     }
 
-//    @PostMapping("/submitForm")
-//    public String submitForm(@ModelAttribute("dto") UserProfileUpdateRequestDto dto) {
-//        service.update(dto);
-//        return "success"; // Or redirect to another page
-//    }
 
     @PutMapping("/updateStatus")
     public ResponseEntity<Void> updateStatus(@RequestHeader("Authorization") String token){

@@ -46,7 +46,7 @@ public class AuthService {
         UserProfileSaveRequestDto saveRequest = UserProfileSaveRequestDtoMapper.INSTANCE.authToUserProfileSaveRequestDto(auth);
 
         //userProfileManager.save(saveRequest);
-        rabbitTemplate.convertAndSend("exchange.direct","Routing.A",saveRequest);
+        rabbitTemplate.convertAndSend("exchange.direct.register","Routing.A",saveRequest);
         return auth;
     }
     public String login(LoginRequestDto dto) {
@@ -77,7 +77,7 @@ public class AuthService {
                 String token = jwtTokenManager.createToken(auth.getId(),auth.getStatus()).orElseThrow(()-> new AuthMicroServiceException(ErrorType.TOKEN_CREATION_FAILED));
                 //userProfileManager.updateStatus(jwtTokenManager.createToken(auth.getId(),auth.getStatus()).orElseThrow(()-> new AuthMicroServiceException(ErrorType.TOKEN_CREATION_FAILED)));
 
-                rabbitTemplate.convertAndSend("exchange.direct","Routing.B",token);
+                rabbitTemplate.convertAndSend("exchange.direct.statusUpdate","Routing.B",token);
                 return "Activation Success!";
             default:
                 throw new AuthMicroServiceException(ErrorType.ACTIVATION_ERROR);
@@ -89,7 +89,9 @@ public class AuthService {
         if(auth.getStatus().equals(EStatus.DELETED)) throw new AuthMicroServiceException(ErrorType.USER_ALREADY_DELETED);
         auth.setStatus(EStatus.DELETED);
         authRepository.save(auth);
-        userProfileManager.updateStatus(jwtTokenManager.createToken(auth.getId(),auth.getStatus()).orElseThrow(()-> new AuthMicroServiceException(ErrorType.TOKEN_CREATION_FAILED)));
+        String token = jwtTokenManager.createToken(auth.getId(),auth.getStatus()).orElseThrow(()-> new AuthMicroServiceException(ErrorType.TOKEN_CREATION_FAILED));
+        //userProfileManager.updateStatus(token);
+        rabbitTemplate.convertAndSend("exchange.direct.statusUpdate","Routing.B",token);
         return "Id = " + authId + " : Successfully Deleted";
     }
 
@@ -110,7 +112,7 @@ public class AuthService {
         return jwtTokenManager.getRoleFromToken(token).orElseThrow(() -> new AuthMicroServiceException(ErrorType.ID_NOT_FOUND)).toString();
     }
 
-    //@RabbitListener(queues ="q.B")
+    @RabbitListener(queues ="q.C")
     public void updateEmail(String token) {
         Long id = getIdFromToken(token);
         String email = jwtTokenManager.getEmailFromToken(token).orElseThrow(() -> new AuthMicroServiceException(ErrorType.EMAIL_NOT_FOUND));

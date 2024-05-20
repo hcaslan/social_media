@@ -96,24 +96,21 @@ public class JwtTokenManager {
         }
 
     }
-    public Optional<Long> getIdFromToken(String token) {
+    public Optional<Long> getAuthIdFromToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC512(secretKey);
             JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).build();
             DecodedJWT decodedJWT = verifier.verify(token);
 
-            if(decodedJWT==null)
+            if (decodedJWT == null)
                 return Optional.empty();
 
             Long id = decodedJWT.getClaim("id").asLong();
             return Optional.of(id);
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             throw new UserProfileServiceException(ErrorType.TOKEN_ARGUMENT_NOTVALID);
-        }
-        catch (JWTVerificationException e) {
+        } catch (JWTVerificationException e) {
             throw new UserProfileServiceException(ErrorType.TOKEN_VERIFY_FAILED);
         }
-
     }
 }
